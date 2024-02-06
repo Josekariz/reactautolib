@@ -1,6 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "St Monica Utawala",
+  "short_name": "ACK",
+  "description": "A Home For Everyone",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,5 +16,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/"
 }
