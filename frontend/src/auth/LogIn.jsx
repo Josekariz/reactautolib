@@ -9,6 +9,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigateToSignUp = () => {
     setActiveTab("signup");
@@ -23,39 +25,38 @@ const Login = () => {
     });
   };
 
-
-  //Login logic
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password } = loginData; // Extract email and password from state
-
-    try {
-      const response = await fetch("http://localhost:4000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // Handle successful login
-        // For example, storing the JWT in localStorage
-        localStorage.setItem("token", data.token);
-        // Redirect or update the UI
-        navigate("/"); // Replace with your success route
-      } else {
-        // Handle errors
-        console.error("Login failed");
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error("Network error: ", error);
+    setIsLoading(true);
+    setError("");
+    const { email, password } = loginData;
+  
+    const response = await fetch("http://localhost:4000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    } else {
+      // Extract error message from response
+      const errorData = await response.json();
+      setError(errorData.message || "An error occurred"); // Display a generic error if the message is not found
+  
+      // Clear the error message after 5 seconds
+      setTimeout(() => {
+        setError("");
+      }, 7000);
     }
+  
+    setIsLoading(false);
   };
+  
 
   return (
     <div
@@ -84,9 +85,10 @@ const Login = () => {
           </button>
         </div>
 
+
         <form onSubmit={handleSubmit}>
           <input
-            className="w-full p-2 mb-4 rounded text-white"
+            className="w-full p-2 mb-4 rounded text-black"
             type="email"
             placeholder="Email Address"
             name="email"
@@ -95,7 +97,7 @@ const Login = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-white"
+            className="w-full p-2 mb-4 rounded text-black"
             type="password"
             placeholder="Password"
             name="password"
@@ -106,10 +108,14 @@ const Login = () => {
           <button
             type="submit"
             className="w-full bg-black text-white text-2xl font-semibold p-2 rounded border-solid border-2 border-sky-500 hover:bg-blue-500"
+            disabled={isLoading}
           >
-            Log In
+          
+            {isLoading ? "Loading..." : "Log In"}
           </button>
         </form>
+        {error && <div className="text-red-500 mb-4 text-center mt-4">{error}</div>}
+
       </div>
     </div>
   );

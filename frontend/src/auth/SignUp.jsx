@@ -5,16 +5,14 @@ import backg from "../assets/authbg.jpg";
 const SignUp = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("signup");
-  
-  // Default profile photo URL
-  const defaultProfilePhotoUrl = "https://unsplash.com/photos/silver-sports-coupe-on-asphalt-road-ZRns2R5azu0";
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    profilePhotoUrl: defaultProfilePhotoUrl, // Initialize with the default profile photo URL
+    profilePhotoUrl: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigateToLogin = () => {
     setActiveTab("login");
@@ -31,26 +29,34 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     const { name, email, password, profilePhotoUrl } = formData;
 
-    try {
-      const response = await fetch("http://localhost:4000/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password, profilePhotoUrl }),
-      });
+    const response = await fetch("http://localhost:4000/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password, profilePhotoUrl }),
+    });
 
-      if (response.ok) {
-        navigate("/"); // Redirect to homepage on successful signup
-      } else {
-        console.error("Signup failed");
-      }
-    } catch (error) {
-      console.error("Network error: ", error);
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/"); // Redirect to homepage on successful signup
+    } else {
+      // Extract error message from response
+      const errorData = await response.json();
+      setError(errorData.message || "An error occurred"); // Display a generic error if the message is not found
+
+      // Clear the error message after 7 seconds
+      setTimeout(() => {
+        setError("");
+      }, 7000);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -81,7 +87,7 @@ const SignUp = () => {
 
         <form onSubmit={handleSubmit}>
           <input
-            className="w-full p-2 mb-4 rounded text-white"
+            className="w-full p-2 mb-4 rounded text-black"
             type="text"
             required
             placeholder="First or Last Name"
@@ -90,7 +96,7 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-white"
+            className="w-full p-2 mb-4 rounded text-black"
             type="email"
             placeholder="Email Address"
             required
@@ -99,7 +105,7 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-white"
+            className="w-full p-2 mb-4 rounded text-black"
             type="password"
             required
             placeholder="Password"
@@ -110,10 +116,14 @@ const SignUp = () => {
           <button
             type="submit"
             className="w-full bg-black text-white text-2xl font-semibold p-2 rounded border-solid border-2 border-sky-500 hover:bg-blue-500"
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
+        {error && (
+          <div className="text-red-500 mb-4 text-center mt-4">{error}</div>
+        )}
       </div>
     </div>
   );

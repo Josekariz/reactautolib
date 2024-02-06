@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import ReviewCard from "../components/ReviewCard";
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 
 function Reviews() {
   const navigate = useNavigate();
@@ -36,6 +38,8 @@ function Reviews() {
     return <div>Error: {error.message}</div>;
   }
   return (
+    <>
+    <Navbar/>
     <div className="flex justify-center">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 mx-auto">
         {reviews.map((review) => (
@@ -49,6 +53,8 @@ function Reviews() {
         }
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 
