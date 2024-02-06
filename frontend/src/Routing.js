@@ -7,6 +7,8 @@ import ReviewForm from "./components/ReviewForm";
 import Reviews from "./reviews/Review";
 // import other components
 import ReviewCardDetails from './components/ReviewCardDetails';
+import Login from "./auth/LogIn";
+import SignUp from "./auth/SignUp";
 
 export default function Routing() {
   return (
@@ -17,6 +19,8 @@ export default function Routing() {
       <Route path="/reviews_form" element={<ReviewForm />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/reviews/:id" element={<ReviewCardDetails />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign_up" element={<SignUp />} />
 
       {/* Define other routes here */}
     </Routes>
