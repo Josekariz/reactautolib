@@ -37,7 +37,7 @@ export default function Navbar({ userProfile }) {
 
             <div className="hidden md:flex items-center space-x-1">
               {["/", "/reviews", "/about", "/contact"].map((path, index) => (
-                <Link key={index} to={path} className="py-5 px-3 text-base-100 navbar-link hover:text-blue-500 hover:scale-110">
+                <Link key={index} to={path} className="py-5 px-3 text-white text-lg navbar-link hover:text-blue-500 hover:scale-110">
                   {['Home', 'Reviews', 'About Us', 'Contact Us'][index]}
                 </Link>
               ))}
