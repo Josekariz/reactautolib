@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backg from "../assets/authbg.jpg";
+import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
   const [loginData, setLoginData] = useState({
@@ -30,7 +32,7 @@ const Login = () => {
     setIsLoading(true);
     setError("");
     const { email, password } = loginData;
-  
+
     const response = await fetch("http://localhost:4000/api/auth/login", {
       method: "POST",
       headers: {
@@ -38,25 +40,25 @@ const Login = () => {
       },
       body: JSON.stringify({ email, password }),
     });
-  
+
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      setUser(data.user);
       navigate("/");
     } else {
       // Extract error message from response
       const errorData = await response.json();
       setError(errorData.message || "An error occurred"); // Display a generic error if the message is not found
-  
+
       // Clear the error message after 5 seconds
       setTimeout(() => {
         setError("");
       }, 7000);
     }
-  
+
     setIsLoading(false);
   };
-  
 
   return (
     <div
@@ -85,7 +87,6 @@ const Login = () => {
           </button>
         </div>
 
-
         <form onSubmit={handleSubmit}>
           <input
             className="w-full p-2 mb-4 rounded text-black"
@@ -110,12 +111,12 @@ const Login = () => {
             className="w-full bg-black text-white text-2xl font-semibold p-2 rounded border-solid border-2 border-sky-500 hover:bg-blue-500"
             disabled={isLoading}
           >
-          
             {isLoading ? "Loading..." : "Log In"}
           </button>
         </form>
-        {error && <div className="text-red-500 mb-4 text-center mt-4">{error}</div>}
-
+        {error && (
+          <div className="text-red-500 mb-4 text-center mt-4">{error}</div>
+        )}
       </div>
     </div>
   );
