@@ -15,7 +15,7 @@ export default function Navbar() {
   const profileDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
-  console.log(profileImage)
+  
 
   const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
