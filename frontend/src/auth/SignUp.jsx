@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import backg from "../assets/authbg.jpg";
+import { UserContext } from "../contexts/UserContext";
 
 const SignUp = () => {
+  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("signup");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    profilePhotoUrl: "",
+    profilePhotoUrl:
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -45,6 +49,8 @@ const SignUp = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
       navigate("/"); // Redirect to homepage on successful signup
     } else {
       // Extract error message from response
@@ -87,7 +93,7 @@ const SignUp = () => {
 
         <form onSubmit={handleSubmit}>
           <input
-            className="w-full p-2 mb-4 rounded text-black"
+            className="w-full p-2 mb-4 rounded text-white"
             type="text"
             required
             placeholder="First or Last Name"
@@ -96,7 +102,7 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-black"
+            className="w-full p-2 mb-4 rounded text-white"
             type="email"
             placeholder="Email Address"
             required
@@ -105,7 +111,7 @@ const SignUp = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-black"
+            className="w-full p-2 mb-4 rounded text-white"
             type="password"
             required
             placeholder="Password"

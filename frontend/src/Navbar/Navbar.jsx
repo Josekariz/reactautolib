@@ -104,7 +104,7 @@ export default function Navbar() {
                     to="/login"
                     className="block px-4 py-2 hover:bg-gray-100 text-black cursor-pointer"
                   >
-                    Sign In
+                    Sign In/up
                   </Link>
                 )}
               </div>

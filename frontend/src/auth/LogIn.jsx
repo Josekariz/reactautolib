@@ -46,7 +46,7 @@ const Login = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user)); // Add this line
+      localStorage.setItem("user", JSON.stringify(data.user)); 
       setUser(data.user);
       navigate("/");
     } else {
@@ -92,7 +92,7 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <input
-            className="w-full p-2 mb-4 rounded text-black"
+            className="w-full p-2 mb-4 rounded text-white"
             type="email"
             placeholder="Email Address"
             name="email"
@@ -101,7 +101,7 @@ const Login = () => {
             onChange={handleInputChange}
           />
           <input
-            className="w-full p-2 mb-4 rounded text-black"
+            className="w-full p-2 mb-4 rounded text-white"
             type="password"
             placeholder="Password"
             name="password"
