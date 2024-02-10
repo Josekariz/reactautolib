@@ -13,7 +13,8 @@ import Login from "./auth/LogIn";
 import SignUp from "./auth/SignUp";
 import Profile from "./profile/Profile";
 import Account from "./profile/Account";
-import MyReviews from './profile/MyReviews';
+import MyReviews from "./profile/MyReviews";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function Routing() {
   return (
@@ -26,11 +27,16 @@ export default function Routing() {
       <Route path="/reviews/:id" element={<ReviewCardDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sign_up" element={<SignUp />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/my-account" element={<Account />} />
-      <Route path="/profile/my-reviews" element={<MyReviews />} />
 
-      {/* Define other routes here */}
+      <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
+      <Route
+        path="/profile/my-account"
+        element={<ProtectedRoute element={Account} />}
+      />
+      <Route
+        path="/profile/my-reviews"
+        element={<ProtectedRoute element={MyReviews} />}
+      />
     </Routes>
   );
 }

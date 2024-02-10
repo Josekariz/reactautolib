@@ -85,12 +85,12 @@ export default function Navbar() {
               <span className="text-white hover:text-blue">{user ? user.name : "Profile"}</span>
             </div>
             {isProfileDropdownOpen && (
-              <div className="absolute mt-12 py-2 bg-white shadow-lg rounded-sm">
+              <div className="absolute mt-4 py-2 bg-white shadow-lg rounded-sm z-50">
                 <Link
                   to="/profile"
                   className="block px-4 py-2 hover:bg-gray-100 text-black cursor-pointer"
                 >
-                  My Account
+                  Profile
                 </Link>
                 {user ? (
                   <button
