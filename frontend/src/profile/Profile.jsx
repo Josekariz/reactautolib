@@ -120,15 +120,15 @@ export default function Profile() {
         <Navbar />
         <MiniNavbar />
         <div class="max-w-2xl w-full mx-auto my-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[70vh] flex flex-col justify-between">
-          <a href="#">
+          
             <img class="rounded-t-lg w-full object-cover h-auto" src={user.profilePhotoUrl} alt="Profile" />
-          </a>
+          
           <div class="p-5 flex-grow">
-            <a href="#">
+            
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Welcome to your profile page, {user.name}
               </h5>
-            </a>
+            
             <div class="italic text-gray-700 dark:text-gray-400 border-l-4 border-blue-500 pl-4 mb-6">
               <p class="mb-2">"{randomQuote.quote}"</p>
               <p class="text-sm font-semibold">- {randomQuote.author}</p>
