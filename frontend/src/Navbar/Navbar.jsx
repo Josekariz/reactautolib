@@ -23,9 +23,13 @@ export default function Navbar() {
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user"); // Add this line
     setUser(null);
     navigate("/");
   };
+  
+  // ... rest of your code ...
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
