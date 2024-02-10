@@ -15,8 +15,6 @@ export default function Navbar() {
   const profileDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
-  
-
   const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
   };
@@ -27,16 +25,21 @@ export default function Navbar() {
     setUser(null);
     navigate("/");
   };
-  
+
   // ... rest of your code ...
-  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target)
+      ) {
         setIsProfileDropdownOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -47,7 +50,7 @@ export default function Navbar() {
     };
   }, [profileDropdownRef, mobileMenuRef]);
 
-  const renderNavLinks = () => (
+  const renderNavLinks = () =>
     ["Home", "Reviews", "About Us", "Contact Us"].map((title, index) => (
       <Link
         key={index}
@@ -56,15 +59,14 @@ export default function Navbar() {
       >
         {title}
       </Link>
-    ))
-  );
+    ));
 
   return (
     <nav className="bg-neutral glass">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center py-2 px-1 cursor-pointer">
-            <img src={Logo} alt="Logo" width={100} height={100} />
+            <img src={Logo} alt="Logo" className="w-24 h-auto" />
           </Link>
 
           <div className="hidden md:flex items-center space-x-1">
@@ -77,12 +79,14 @@ export default function Navbar() {
               className="flex flex-col items-center  px-2 cursor-pointer"
             >
               <div
-  className="w-20 h-20 bg-cover bg-center rounded-full"
+  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-cover bg-center rounded-full"
   style={{ backgroundImage: `url(${profileImage})` }}
-  alt="Profile"
 ></div>
 
-              <span className="text-white hover:text-blue">{user ? user.name : "Profile"}</span>
+
+              <span className="text-white hover:text-blue">
+                {user ? user.name : "Profile"}
+              </span>
             </div>
             {isProfileDropdownOpen && (
               <div className="absolute mt-4 py-2 bg-white shadow-lg rounded-sm z-50">
@@ -133,7 +137,9 @@ export default function Navbar() {
         </div>
 
         <div
-          className={`${isOpen ? "flex" : "hidden"} md:hidden flex-col items-center`}
+          className={`${
+            isOpen ? "flex" : "hidden"
+          } md:hidden flex-col items-center`}
           ref={mobileMenuRef}
         >
           {renderNavLinks()}
