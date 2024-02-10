@@ -8,9 +8,12 @@ import Contact from "./pages/contact/Contact";
 import ReviewForm from "./components/ReviewForm";
 import Reviews from "./reviews/Review";
 // import other components
-import ReviewCardDetails from './components/ReviewCardDetails';
+import ReviewCardDetails from "./components/ReviewCardDetails";
 import Login from "./auth/LogIn";
 import SignUp from "./auth/SignUp";
+import Profile from "./profile/Profile";
+import Account from "./profile/Account";
+import MyReviews from './profile/MyReviews';
 
 export default function Routing() {
   return (
@@ -18,15 +21,16 @@ export default function Routing() {
       <Route path="/" element={<App />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/reviews_form" element={<ReviewForm />} />
+      <Route path="/add_review" element={<ReviewForm />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/reviews/:id" element={<ReviewCardDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sign_up" element={<SignUp />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/my-account" element={<Account />} />
+      <Route path="/profile/my-reviews" element={<MyReviews />} />
 
       {/* Define other routes here */}
     </Routes>
   );
 }
-
-  

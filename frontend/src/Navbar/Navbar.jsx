@@ -74,7 +74,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-3" ref={profileDropdownRef}>
             <div
               onClick={handleProfileClick}
-              className="flex flex-col items-center py-5 px-2 cursor-pointer"
+              className="flex flex-col items-center py-2 px-2 cursor-pointer"
             >
               <div
   className="w-20 h-20 bg-cover bg-center rounded-full"
