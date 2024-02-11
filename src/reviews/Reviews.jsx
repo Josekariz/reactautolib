@@ -5,11 +5,18 @@ import car from "../assets/simple.jpg";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 export function Reviews() {
+  // test
+  const dburl = "http://localhost:4000/reviews";
+
+  // deployment
+
+  //const dburl= "https://backend-autolib.onrender.com/reviews"
+
   const navigate = useNavigate(); // Hook for navigation
 
   // Fetch reviews function
   const fetchReviews = async () => {
-    const response = await fetch("http://localhost:4000/reviews");
+    const response = await fetch(dburl);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

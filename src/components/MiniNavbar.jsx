@@ -15,7 +15,7 @@ function MiniNavbar() {
           }`
         }
       >
-        My Account
+        Update Profile
       </NavLink>
       <NavLink
         to="/profile/my-reviews"

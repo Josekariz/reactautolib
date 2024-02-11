@@ -107,35 +107,36 @@ const quotes = [
 ];
 
 export default function Profile() {
-    const { user } = useContext(UserContext);
-    const [randomQuote, setRandomQuote] = useState({});
-  
-    useEffect(() => {
-      const quote = quotes[Math.floor(Math.random() * quotes.length)];
-      setRandomQuote(quote);
-    }, []);
-  
-    return (
-      <>
-        <Navbar />
-        <MiniNavbar />
-        <div class="max-w-2xl w-full mx-auto my-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[70vh] flex flex-col justify-between">
-          
-            <img class="rounded-t-lg w-full object-cover h-auto" src={user.profilePhotoUrl} alt="Profile" />
-          
-          <div class="p-5 flex-grow">
-            
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Welcome to your profile page, {user.name}
-              </h5>
-            
-            <div class="italic text-gray-700 dark:text-gray-400 border-l-4 border-blue-500 pl-4 mb-6">
-              <p class="mb-2">"{randomQuote.quote}"</p>
-              <p class="text-sm font-semibold">- {randomQuote.author}</p>
-            </div>
+  const { user } = useContext(UserContext);
+  const [randomQuote, setRandomQuote] = useState({});
+
+  useEffect(() => {
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    setRandomQuote(quote);
+  }, []);
+
+  return (
+    <>
+      <Navbar />
+      <MiniNavbar />
+      <div class="max-w-2xl w-full mx-auto my-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[70vh] flex flex-col justify-between">
+        <img
+          class="rounded-t-lg w-full object-cover h-auto"
+          src={user.profilePhotoUrl}
+          alt="Profile"
+        />
+
+        <div class="p-5 flex-grow">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Welcome to your profile page, {user.name}
+          </h5>
+
+          <div class="italic text-gray-700 dark:text-gray-400 border-l-4 border-blue-500 pl-4 mb-6">
+            <p class="mb-2">"{randomQuote.quote}"</p>
+            <p class="text-sm font-semibold">- {randomQuote.author}</p>
           </div>
         </div>
-      </>
-    );
-  }
-  
+      </div>
+    </>
+  );
+}
