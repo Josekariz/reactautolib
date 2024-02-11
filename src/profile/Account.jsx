@@ -58,8 +58,8 @@ export default function Account() {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      const response = await axios.post(
-        "http://localhost:4000/api/updateProfile",
+      const response = await axios.put(
+        "http://localhost:4000/api/auth/updateProfile",
         { name, profilePhotoUrl: uploadedImageUrl },
         config
       );
