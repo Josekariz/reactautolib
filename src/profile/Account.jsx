@@ -1,16 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import MiniNavbar from "../components/MiniNavbar";
 import { UserContext } from "../contexts/UserContext";
-import { useNavigate } from "react-router-dom";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
+import axios from "axios";
 
 export default function Account() {
-  const { user } = useContext(UserContext);
-  const [name, setName] = useState(user.name); // State to store the updated name
+  const { user, setUser } = useContext(UserContext);
+  const [name, setName] = useState(user.name);
   const [imagePreview, setImagePreview] = useState(
     user.profilePhotoUrl || "path/to/default/image.jpg"
   );
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer;
+    if (error) {
+      timer = setTimeout(() => setError(""), 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -18,17 +32,55 @@ export default function Account() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
+        setSelectedFile(file);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleNameChange = (e) => {
-    setName(e.target.value); // Update the name state as the user types
+    setName(e.target.value);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      let uploadedImageUrl = user.profilePhotoUrl;
+
+      if (selectedFile) {
+        const newImageName = v4() + selectedFile.name;
+        const imageRef = ref(storage, `images/${newImageName}`);
+        await uploadBytes(imageRef, selectedFile);
+        uploadedImageUrl = await getDownloadURL(imageRef);
+      }
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      const response = await axios.post(
+        "http://localhost:4000/api/updateProfile",
+        { name, profilePhotoUrl: uploadedImageUrl },
+        config
+      );
+
+      if (response && response.data) {
+        const updatedUserData = {
+          ...user,
+          name,
+          profilePhotoUrl: uploadedImageUrl,
+        };
+        setUser(updatedUserData);
+      }
+
+      navigate("/profile");
+    } catch (error) {
+      setError(`Error: ${error.message}`);
+    }
   };
 
   const handleCancel = () => {
-    navigate("/profile"); // Navigate to the profile page on cancel
+    navigate("/profile");
   };
 
   return (
@@ -48,7 +100,10 @@ export default function Account() {
             onChange={handleImageChange}
             className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
           />
-          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          <div
+            className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+            style={{ pointerEvents: "none" }}
+          >
             <span className="text-white bg-black bg-opacity-50 p-2 rounded">
               Upload New Profile Photo
             </span>
@@ -61,19 +116,23 @@ export default function Account() {
             value={name}
             onChange={handleNameChange}
           />
-          {/* Replace h5 with input for name change */}
+          {error && (
+            <div role="alert" className="alert alert-error text-center">
+              <span>{error}</span>
+            </div>
+          )}
         </div>
 
         <div className="flex justify-between p-5">
           <button
             onClick={handleCancel}
-            className="bg-yellow-500 w-2/5 text-white p-2 rounded" // Reduced to 40% width
+            className="bg-yellow-500 w-2/5 text-white p-2 rounded"
           >
             Cancel
           </button>
           <button
-            // onClick={handleUpdate} // Add your update logic here
-            className="bg-green-500 w-2/5 text-white p-2 rounded" // Reduced to 40% width
+            onClick={handleUpdate}
+            className="bg-green-500 w-2/5 text-white p-2 rounded"
           >
             Update
           </button>
