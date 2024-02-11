@@ -6,6 +6,15 @@ import backg from "../assets/authbg.jpg";
 import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
+  //test
+  
+  const dburl= "http://localhost:4000/api/auth/login"
+  
+  //deployment
+  
+  //const dburl= "https://backend-autolib.onrender.com/api/auth/login"
+
+
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
@@ -35,7 +44,7 @@ const Login = () => {
     setError("");
     const { email, password } = loginData;
 
-    const response = await fetch("http://localhost:4000/api/auth/login", {
+    const response = await fetch(dburl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

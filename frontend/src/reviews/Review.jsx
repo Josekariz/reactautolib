@@ -6,10 +6,17 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 
 function Reviews() {
+  // test
+  const dburl = "http://localhost:4000/reviews"
+
+  // deployment
+
+  //const dburl= "https://backend-autolib.onrender.com/reviews"
+
   const navigate = useNavigate();
 
   const fetchReviews = async () => {
-    const response = await fetch("http://localhost:4000/reviews");
+    const response = await fetch(dburl);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

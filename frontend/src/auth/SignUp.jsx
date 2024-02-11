@@ -4,6 +4,15 @@ import backg from "../assets/authbg.jpg";
 import { UserContext } from "../contexts/UserContext";
 
 const SignUp = () => {
+  //test
+
+  const dburl = "http://localhost:4000/api/auth/signup";
+
+  //deployment
+
+  //const dburl= "https://backend-autolib.onrender.com/api/auth/signup"
+
+  
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -38,7 +47,7 @@ const SignUp = () => {
 
     const { name, email, password, profilePhotoUrl } = formData;
 
-    const response = await fetch("http://localhost:4000/api/auth/signup", {
+    const response = await fetch(dburl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
