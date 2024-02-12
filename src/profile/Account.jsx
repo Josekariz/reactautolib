@@ -53,15 +53,17 @@ export default function Account() {
         uploadedImageUrl = await getDownloadURL(imageRef);
       }
 
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+      // const token = localStorage.getItem("token");
+      // const config = {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // };
 
+      // Include the user's ID in the request
+      const userId = user._id; // Assuming the user's ID is stored in the user object in context
       const response = await axios.put(
-        "http://localhost:4000/api/auth/updateProfile",
-        { name, profilePhotoUrl: uploadedImageUrl },
-        config
+        `http://localhost:4000/api/auth/updateProfile`, // Adjust the URL to include the user's ID
+        { userId, name, profilePhotoUrl: uploadedImageUrl }
+        
       );
 
       if (response && response.data) {
