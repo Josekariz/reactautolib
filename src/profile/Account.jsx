@@ -17,6 +17,7 @@ export default function Account() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     let timer;
@@ -44,6 +45,7 @@ export default function Account() {
 
   const handleUpdate = async () => {
     try {
+      setIsUpdating(true);
       let uploadedImageUrl = user.profilePhotoUrl;
 
       if (selectedFile) {
@@ -63,7 +65,6 @@ export default function Account() {
       const response = await axios.put(
         `http://localhost:4000/api/auth/updateProfile`, // Adjust the URL to include the user's ID
         { userId, name, profilePhotoUrl: uploadedImageUrl }
-        
       );
 
       if (response && response.data) {
@@ -74,7 +75,7 @@ export default function Account() {
         };
         setUser(updatedUserData);
       }
-
+      setIsUpdating(false);
       navigate("/profile");
     } catch (error) {
       setError(`Error: ${error.message}`);
@@ -126,18 +127,29 @@ export default function Account() {
         </div>
 
         <div className="flex justify-between p-5">
-          <button
-            onClick={handleCancel}
-            className="bg-yellow-500 w-2/5 text-white p-2 rounded"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleUpdate}
-            className="bg-green-500 w-2/5 text-white p-2 rounded"
-          >
-            Update
-          </button>
+          {!isUpdating ? (
+            <>
+              <button
+                onClick={handleCancel}
+                className="bg-yellow-500 w-2/5 text-white p-2 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdate}
+                className="bg-green-500 w-2/5 text-white p-2 rounded"
+              >
+                Update
+              </button>
+            </>
+          ) : (
+            <button
+              disabled
+              className="bg-gray-500 w-full text-white p-2 rounded flex justify-center"
+            >
+              <span className="loading loading-infinity loading-lg"></span>
+            </button>
+          )}
         </div>
       </div>
     </>
