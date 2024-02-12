@@ -1,27 +1,51 @@
-// UserContext.js
 import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext({
   user: null,
   setUser: () => {},
-  isLoading: true, // Indicates if the user data is still loading
+  isLoading: true,
 });
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Initialize with true
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const storedTime = localStorage.getItem("loginTime");
+
+    if (storedUser && storedTime) {
+      const currentTime = new Date();
+      const loginTime = new Date(parseInt(storedTime));
+
+      const hourDifference = (currentTime - loginTime) / (1000 * 60 * 60);
+      if (hourDifference < 1) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        // Clear user data if more than 1 hour has passed
+        localStorage.removeItem("user");
+        localStorage.removeItem("loginTime");
+      }
     }
-    setIsLoading(false); // Set loading to false after checking localStorage
+    setIsLoading(false);
   }, []);
 
+  const updateUser = (newUser) => {
+    setUser(newUser);
+    if (newUser) {
+      localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("loginTime", Date.now().toString());
+    } else {
+      localStorage.removeItem("user");
+      localStorage.removeItem("loginTime");
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading }}>
+    <UserContext.Provider value={{ user, setUser: updateUser, isLoading }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+export default UserProvider;
