@@ -17,7 +17,7 @@ const ReviewCardDetails = () => {
 
   //test
   //const dbrul = `http://localhost:4000/api/reviews/${review._id}`
-  console.log(user._id)
+  
   const dbrul = `https://backend-autolib.onrender.com/api/reviews/${review._id}`
 
 
@@ -67,7 +67,7 @@ const ReviewCardDetails = () => {
         throw new Error(data.message || "Failed to delete the review");
       }
 
-      console.log(data.message); // "Review deleted successfully"
+       // "Review deleted successfully"
       // Here you can update state to show success message or navigate away
       setShowSuccessAlert(true);
       setTimeout(() => {
