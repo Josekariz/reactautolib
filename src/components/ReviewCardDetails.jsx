@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 
 import { FaThumbsUp, FaThumbsDown, FaEdit, FaTrash } from "react-icons/fa";
@@ -9,11 +9,8 @@ const ReviewCardDetails = () => {
   const navigate = useNavigate(); // Create a navigate function
   const review = location.state?.review;
   const { user } = useContext(UserContext);
-
-  console.log("user");
-  console.log(user._id);
-  console.log("rev");
-  console.log(review.userId);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   if (!review) {
     return <div className="text-center my-5">Review not found</div>;
@@ -24,8 +21,91 @@ const ReviewCardDetails = () => {
     navigate(-1);
   };
 
+  // Function to handle update action
+  const handleUpdate = () => {
+    console.log("Update action triggered for review ID:", review._id);
+  };
+
+  // Function to handle delete action
+  const handleDelete = async () => {
+    if (!review?._id) {
+      console.error("No review ID available for deletion.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/reviews/${review._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // If you use token-based authentication, include the Authorization header
+            // 'Authorization': `Bearer ${token}`
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to delete the review");
+      }
+
+      console.log(data.message); // "Review deleted successfully"
+      // Here you can update state to show success message or navigate away
+      setShowSuccessAlert(true);
+      setTimeout(() => {
+        navigate(-1); // Navigate back after showing the success alert
+      }, 3000);
+    } catch (error) {
+      console.error("Error deleting the review:", error);
+      setShowErrorAlert(true);
+      setTimeout(() => {
+        setShowErrorAlert(false); // Hide the error alert after some time
+      }, 3000);
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+      {showSuccessAlert && (
+        <div role="alert" className="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Your review has been deleted successfully!</span>
+        </div>
+      )}
+
+      {showErrorAlert && (
+        <div role="alert" className="alert alert-error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Error! Failed to delete the review.</span>
+        </div>
+      )}
       <h1 className="text-3xl font-bold mb-2">{review.name}</h1>
       <img className="w-full mb-4" src={review.imagesLink} alt="Review" />
       <p className="text-gray-700 mb-4">{review.overview}</p>
@@ -49,15 +129,18 @@ const ReviewCardDetails = () => {
       </p>
 
       <div className="flex justify-evenly mb-4">
-        {user._id === review.userId ? (
-          // Render these buttons if the user is the owner
+        {user?._id === review?.userId ? (
           <div className="flex space-x-24">
-            {" "}
-            {/* Add spacing between buttons */}
-            <button className="flex items-center text-orange-500">
+            <button
+              onClick={handleUpdate}
+              className="flex items-center text-orange-500"
+            >
               <FaEdit className="mr-1" /> Update
             </button>
-            <button className="flex items-center text-red-500">
+            <button
+              onClick={handleDelete}
+              className="flex items-center text-red-500"
+            >
               <FaTrash className="mr-1" /> Delete
             </button>
           </div>
