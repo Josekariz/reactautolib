@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"; // Import useNaviga
 
 import { FaThumbsUp, FaThumbsDown, FaEdit, FaTrash } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
+import ReviewForm from "./ReviewForm";
 
 const ReviewCardDetails = () => {
   const location = useLocation();
@@ -11,6 +12,8 @@ const ReviewCardDetails = () => {
   const { user } = useContext(UserContext);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
 
   if (!review) {
     return <div className="text-center my-5">Review not found</div>;
@@ -23,13 +26,18 @@ const ReviewCardDetails = () => {
 
   // Function to handle update action
   const handleUpdate = () => {
-    console.log("Update action triggered for review ID:", review._id);
+    setIsEditing(true);
+
   };
+
+  if (isEditing) {
+    return <ReviewForm existingData={review} />;
+  }
 
   // Function to handle delete action
   const handleDelete = async () => {
     if (!review?._id) {
-      console.error("No review ID available for deletion.");
+      navigate("/reviews")
       return;
     }
 

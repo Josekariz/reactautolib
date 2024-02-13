@@ -33,13 +33,24 @@ export default function ReviewForm({ existingData = null }) {
     setIsLoading(true);
     setError(null);
 
+    const isUpdating = existingData != null;
+
+    const endpoint = existingData
+      ? `http://localhost:4000/api/reviews/${existingData._id}`
+      : "http://localhost:4000/api/reviews";
+    const method = existingData ? "PUT" : "POST";
+
+    const dataToSend = isUpdating
+      ? { ...formData, _id: undefined } // Exclude the _id field when updating
+      : formData;
+
     try {
-      const response = await fetch("http://localhost:4000/api/reviews", {
-        method: "POST",
+      const response = await fetch(endpoint, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       if (!response.ok) {
