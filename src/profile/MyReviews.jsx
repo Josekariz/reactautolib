@@ -11,17 +11,19 @@ export default function MyReviews() {
   const navigate = useNavigate();
 
   const fetchReviews = async () => {
-    console.log("Fetching reviews for user ID:", user?._id);
+    
     if (!user || !user._id) {
-      console.log("User or user._id is undefined, skipping fetch");
-      return [];
+      throw new Error("User not found or not logged in.");
+      
     }
 
     const response = await fetch(
       `http://localhost:4000/my-reviews/user?userId=${user._id}`
     );
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // Parse the JSON to get the error message
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message || `HTTP error! Status: ${response.status}`);
     }
     return response.json();
   };
