@@ -15,6 +15,7 @@ import Profile from "./profile/Profile";
 import Account from "./profile/Account";
 import MyReviews from "./profile/MyReviews";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditReviewForm from "./components/EditForm";
 
 export default function Routing() {
   return (
@@ -23,6 +24,7 @@ export default function Routing() {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/add_review" element={<ReviewForm />} />
+      <Route path="/edit_review" element={<EditReviewForm />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/reviews/:id" element={<ReviewCardDetails />} />
       <Route path="/login" element={<Login />} />

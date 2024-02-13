@@ -12,7 +12,7 @@ export default function MyReviews() {
   const navigate = useNavigate();
   //test
   //const dburl = `http://localhost:4000/my-reviews/user?userId=${user._id}`
-  const dburl = `https://backend-autolib.onrender.com/my-reviews/user?userId=${user._id}`
+  const dburl = `https://backend-autolib.onrender.com/my-reviews/user?userId=${user._id}`;
 
   const fetchReviews = async () => {
     

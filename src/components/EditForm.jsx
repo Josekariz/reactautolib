@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
-export default function ReviewForm() {
+export default function EditReviewForm({ existingData }) {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const [error, setError] = useState("");
@@ -20,7 +20,14 @@ export default function ReviewForm() {
   });
   const navigate = useNavigate();
 
-  const postdburl = "https://backend-autolib.onrender.com/api/reviews";
+  useEffect(() => {
+    if (existingData) {
+      const { _id, ...dataWithoutId } = existingData;
+      setFormData(dataWithoutId);
+    }
+  }, [existingData]);
+
+  const putdburl = `https://backend-autolib.onrender.com/api/reviews/${existingData?._id}`;
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -28,8 +35,8 @@ export default function ReviewForm() {
     setError(null);
 
     try {
-      const response = await fetch(postdburl, {
-        method: "POST",
+      const response = await fetch(putdburl, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -40,7 +47,7 @@ export default function ReviewForm() {
         throw new Error("Network response was not ok");
       }
 
-      console.log("Review submitted successfully");
+      console.log("Review updated successfully");
       navigate(-1);
     } catch (error) {
       setError("An error occurred while processing the form: " + error.message);
