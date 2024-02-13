@@ -15,6 +15,12 @@ const ReviewCardDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
 
 
+  //test
+  //const dbrul = `http://localhost:4000/api/reviews/${review._id}`
+  
+  const dbrul = `https://backend-autolib.onrender.com/api/reviews/${review._id}`
+
+
   if (!review) {
     return <div className="text-center my-5">Review not found</div>;
   }
@@ -43,7 +49,7 @@ const ReviewCardDetails = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/reviews/${review._id}`,
+        dbrul,
         {
           method: "DELETE",
           headers: {

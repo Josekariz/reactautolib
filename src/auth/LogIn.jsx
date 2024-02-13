@@ -8,11 +8,11 @@ import { UserContext } from "../contexts/UserContext";
 const Login = () => {
   //test
   
-  const dburl= "http://localhost:4000/api/auth/login"
+  //const dburl= "http://localhost:4000/api/auth/login"
   
-  //deployment
   
-  //const dburl= "https://backend-autolib.onrender.com/api/auth/login"
+  
+  const dburl= "https://backend-autolib.onrender.com/api/auth/login"
 
 
   const { setUser } = useContext(UserContext);

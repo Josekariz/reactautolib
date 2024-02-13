@@ -9,6 +9,10 @@ import { v4 } from "uuid";
 import axios from "axios";
 
 export default function Account() {
+  //test
+  //const dburl = `http://localhost:4000/api/auth/updateProfile`
+  const dburl = "https://backend-autolib.onrender.com/api/auth/updateProfile`"
+
   const { user, setUser } = useContext(UserContext);
   const [name, setName] = useState(user.name);
   const [imagePreview, setImagePreview] = useState(
@@ -63,7 +67,7 @@ export default function Account() {
       // Include the user's ID in the request
       const userId = user._id; // Assuming the user's ID is stored in the user object in context
       const response = await axios.put(
-        `http://localhost:4000/api/auth/updateProfile`, // Adjust the URL to include the user's ID
+        dburl, // Adjust the URL to include the user's ID
         { userId, name, profilePhotoUrl: uploadedImageUrl }
       );
 

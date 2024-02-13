@@ -9,11 +9,11 @@ import FloatingButton from "../components/FloatingButton";
 
 function Reviews() {
   // test
-  const dburl = "http://localhost:4000/reviews"
+  //const dburl = "http://localhost:4000/reviews"
 
-  // deployment
+  
 
-  //const dburl= "https://backend-autolib.onrender.com/reviews"
+  const dburl= "https://backend-autolib.onrender.com/reviews"
 
   const navigate = useNavigate();
 

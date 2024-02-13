@@ -10,6 +10,9 @@ import FloatingButton from "../components/FloatingButton";
 export default function MyReviews() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  //test
+  //const dburl = `http://localhost:4000/my-reviews/user?userId=${user._id}`
+  const dburl = `https://backend-autolib.onrender.com/my-reviews/user?userId=${user._id}`
 
   const fetchReviews = async () => {
     
@@ -19,7 +22,7 @@ export default function MyReviews() {
     }
 
     const response = await fetch(
-      `http://localhost:4000/my-reviews/user?userId=${user._id}`
+      dburl
     );
     if (!response.ok) {
       // Parse the JSON to get the error message

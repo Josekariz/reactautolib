@@ -4,6 +4,13 @@ import { useNavigate } from "react-router-dom"; // If using React Router v6
 import { UserContext } from "../contexts/UserContext";
 
 export default function ReviewForm({ existingData = null }) {
+  //test
+  //const putdburl = `http://localhost:4000/api/reviews/${existingData._id}`
+  //const postdburl = "http://localhost:4000/api/reviews"
+  const putdburl = `https://backend-autolib.onrender.com/api/reviews/${existingData._id}`
+  const postdburl = "https://backend-autolib.onrender.com/api/reviews"
+
+
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const [error, setError] = useState("");
@@ -36,8 +43,8 @@ export default function ReviewForm({ existingData = null }) {
     const isUpdating = existingData != null;
 
     const endpoint = existingData
-      ? `http://localhost:4000/api/reviews/${existingData._id}`
-      : "http://localhost:4000/api/reviews";
+      ? putdburl
+      : postdburl;
     const method = existingData ? "PUT" : "POST";
 
     const dataToSend = isUpdating
