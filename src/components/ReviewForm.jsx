@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom"; // If using React Router v6
+import { UserContext } from "../contexts/UserContext";
 
 export default function ReviewForm({ existingData = null }) {
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -14,7 +17,7 @@ export default function ReviewForm({ existingData = null }) {
     fuelEconomy: "",
     otherDetails: "",
     imagesLink: "",
-    userId: "",
+    userId: user._id,
   });
   const navigate = useNavigate(); // For navigation
 
@@ -25,16 +28,29 @@ export default function ReviewForm({ existingData = null }) {
     }
   }, [existingData]);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      console.log(formData); // Log the form data to the console
-      // Add your submit logic here
+      const response = await fetch("http://localhost:4000/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Handle the successful response here
+      console.log("Review submitted successfully");
+      navigate("/reviews"); // Redirect after successful submission
     } catch (error) {
-      setError("An error occurred while processing the form.");
+      setError("An error occurred while processing the form: " + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -123,14 +139,7 @@ export default function ReviewForm({ existingData = null }) {
             placeholder="Images Link"
             className="w-full p-2 border rounded bg-gray-50 text-black"
           />
-          <input
-            type="text"
-            name="userId"
-            value={formData.userId}
-            onChange={handleInputChange}
-            placeholder="UserId"
-            className="w-full p-2 border rounded bg-gray-50 text-black"
-          />
+
           <div className="flex justify-evenly space-x-2">
             <button
               type="button"
