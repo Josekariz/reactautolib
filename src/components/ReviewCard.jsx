@@ -1,3 +1,5 @@
+//reviewcard.jsx
+
 import React from "react";
 import car from "../assets/simple.jpg";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
