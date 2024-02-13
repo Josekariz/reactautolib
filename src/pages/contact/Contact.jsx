@@ -9,6 +9,7 @@ import {
 import "./contact.css"; // Import the CSS file
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
+import FloatingButton from "../../components/FloatingButton";
 
 export default function Contact() {
   return (
@@ -61,6 +62,7 @@ export default function Contact() {
         </div>
       </div>
       <Footer />
+      <FloatingButton/>
     </>
   );
 }

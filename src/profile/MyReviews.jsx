@@ -5,6 +5,7 @@ import ReviewCard from "../components/ReviewCard";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../contexts/UserContext";
+import FloatingButton from "../components/FloatingButton";
 
 export default function MyReviews() {
   const { user } = useContext(UserContext);
@@ -71,6 +72,7 @@ export default function MyReviews() {
         </div>
       </div>
       <Footer />
+      <FloatingButton/>
     </>
   );
 }

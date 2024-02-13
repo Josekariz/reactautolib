@@ -33,6 +33,7 @@ export default function App() {
           </Link>
         </div>
       </div>
+      
       <Footer />
     </>
   );

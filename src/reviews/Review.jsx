@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewCard from "../components/ReviewCard";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import FloatingButton from "../components/FloatingButton";
 
 function Reviews() {
   // test
@@ -67,6 +68,7 @@ function Reviews() {
         </div>
       </div>
       <Footer />
+      <FloatingButton/>
     </>
   );
 }

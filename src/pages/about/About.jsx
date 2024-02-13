@@ -5,11 +5,12 @@ import Pic3 from "../../assets/classic.jpg";
 import "./about.css";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
+import FloatingButton from "../../components/FloatingButton";
 
 function About() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">
           Discover the AutoLibrary Difference
@@ -120,7 +121,8 @@ function About() {
           </p>
         </div>
       </div>
-      <Footer/>
+      <Footer />
+      <FloatingButton />
     </>
   );
 }
