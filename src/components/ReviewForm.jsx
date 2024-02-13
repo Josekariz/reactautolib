@@ -66,7 +66,7 @@ export default function ReviewForm({ existingData = null }) {
 
       // Handle the successful response here
       console.log("Review submitted successfully");
-      navigate("/reviews"); // Redirect after successful submission
+      navigate(-1); // Redirect after successful submission
     } catch (error) {
       setError("An error occurred while processing the form: " + error.message);
     } finally {

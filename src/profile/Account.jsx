@@ -11,7 +11,7 @@ import axios from "axios";
 export default function Account() {
   //test
   //const dburl = `http://localhost:4000/api/auth/updateProfile`
-  const dburl = "https://backend-autolib.onrender.com/api/auth/updateProfile`"
+  const dburl = `https://backend-autolib.onrender.com/api/auth/updateProfile`
 
   const { user, setUser } = useContext(UserContext);
   const [name, setName] = useState(user.name);
