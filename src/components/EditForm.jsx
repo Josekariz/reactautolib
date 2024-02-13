@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
 export default function EditReviewForm({ existingData }) {
+  console.log(existingData);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const [error, setError] = useState("");
@@ -20,14 +21,18 @@ export default function EditReviewForm({ existingData }) {
   });
   const navigate = useNavigate();
 
+  const [reviewId, setReviewId] = useState(null);
+
   useEffect(() => {
     if (existingData) {
+      setReviewId(existingData._id);
       const { _id, ...dataWithoutId } = existingData;
       setFormData(dataWithoutId);
     }
   }, [existingData]);
 
-  const putdburl = `https://backend-autolib.onrender.com/api/reviews/${existingData?._id}`;
+  const putdburl = `https://backend-autolib.onrender.com/api/reviews/${reviewId}`;
+
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -63,9 +68,7 @@ export default function EditReviewForm({ existingData }) {
   return (
     <div className="flex justify-center items-center h-screen bg-black">
       <div className="glass bg-neutral p-6 rounded-lg shadow-lg w-full max-w-4xl">
-        <h1 className="text-3xl font-bold text-center text-white mb-4">
-          Add
-        </h1>
+        <h1 className="text-3xl font-bold text-center text-white mb-4">Add</h1>
         {error && <div className="text-red-500">{error}</div>}
         <form onSubmit={onSubmit} className="space-y-4">
           <input

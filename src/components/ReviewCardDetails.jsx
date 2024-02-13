@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom"; // Import useNaviga
 
 import { FaThumbsUp, FaThumbsDown, FaEdit, FaTrash } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
-import ReviewForm from "./ReviewForm";
 import EditReviewForm from "./EditForm";
 
 const ReviewCardDetails = () => {
@@ -37,7 +36,7 @@ const ReviewCardDetails = () => {
 
   };
 
-  console.log(review)
+  
   if (isEditing) {
     return <EditReviewForm existingData={review} />;
   }

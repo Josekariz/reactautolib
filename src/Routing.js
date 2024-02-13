@@ -24,7 +24,8 @@ export default function Routing() {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/add_review" element={<ReviewForm />} />
-      <Route path="/edit_review" element={<EditReviewForm />} />
+      <Route path="/edit_review/:id" element={<EditReviewForm />} />
+
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/reviews/:id" element={<ReviewCardDetails />} />
       <Route path="/login" element={<Login />} />
