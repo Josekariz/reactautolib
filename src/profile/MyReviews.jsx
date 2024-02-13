@@ -10,22 +10,15 @@ import FloatingButton from "../components/FloatingButton";
 export default function MyReviews() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  //test
-  //const dburl = `http://localhost:4000/my-reviews/user?userId=${user._id}`
   const dburl = `https://backend-autolib.onrender.com/my-reviews/user?userId=${user._id}`;
 
   const fetchReviews = async () => {
-    
     if (!user || !user._id) {
       throw new Error("User not found or not logged in.");
-      
     }
 
-    const response = await fetch(
-      dburl
-    );
+    const response = await fetch(dburl);
     if (!response.ok) {
-      // Parse the JSON to get the error message
       const errorResponse = await response.json();
       throw new Error(errorResponse.message || `HTTP error! Status: ${response.status}`);
     }
@@ -64,18 +57,27 @@ export default function MyReviews() {
       <Navbar />
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 mx-auto">
-          {reviews &&
-            reviews.map((review) => (
-              <ReviewCard
-                key={review._id}
-                review={review}
-                onCardClick={handleCardClick}
-              />
-            ))}
+          {Array.isArray(reviews) ? (
+            reviews.length > 0 ? (
+              reviews.map((review) => (
+                <ReviewCard
+                  key={review._id}
+                  review={review}
+                  onCardClick={handleCardClick}
+                />
+              ))
+            ) : (
+              <div>No reviews available</div>
+            )
+          ) : (
+            <div className="flex justify-center  mx-auto text-red-500 items-center text-xl font-semi-bold h-screen">
+              <div>{reviews.message}</div> {/* Displaying the message from the backend */}
+            </div>
+          )}
         </div>
       </div>
       <Footer />
-      <FloatingButton/>
+      <FloatingButton />
     </>
   );
 }

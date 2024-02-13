@@ -17,7 +17,7 @@ const ReviewCardDetails = () => {
 
   //test
   //const dbrul = `http://localhost:4000/api/reviews/${review._id}`
-  
+  console.log(user._id)
   const dbrul = `https://backend-autolib.onrender.com/api/reviews/${review._id}`
 
 
