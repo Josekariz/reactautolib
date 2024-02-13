@@ -1,16 +1,21 @@
-//reviewcarddetails.jsx
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 const ReviewCardDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Create a navigate function
   const review = location.state?.review;
 
   if (!review) {
     return <div className="text-center my-5">Review not found</div>;
   }
+
+  // Function to handle the go back action
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
@@ -43,9 +48,13 @@ const ReviewCardDetails = () => {
           <FaThumbsDown className="text-red-500 mr-1" /> Downvote
         </button>
       </div>
-      <Link to="/reviews">
-        <button className="text-blue-600 hover:text-blue-800">Go back</button>
-      </Link>
+      {/* Replace Link with button that calls handleGoBack */}
+      <button
+        onClick={handleGoBack}
+        className="text-blue-600 hover:text-blue-800"
+      >
+        Go back
+      </button>
     </div>
   );
 };
