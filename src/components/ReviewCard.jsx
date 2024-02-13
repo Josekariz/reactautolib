@@ -10,7 +10,7 @@ export default function ReviewCard({ review, onCardClick }) {
       onClick={() => onCardClick(review)}
       className="max-w-sm rounded overflow-hidden shadow-lg bg-yellow-100 glass transition-shadow duration-300 hover:shadow-2xl mx-auto cursor-pointer"
     >
-      <img className="w-full" src={car} alt="Review" />
+      <img className="w-full" src={review.imagesLink} alt="Review" />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{review.name}</div>
         <p className="text-gray-700 text-base">{review.overview}</p>
