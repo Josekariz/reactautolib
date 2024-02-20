@@ -1,10 +1,11 @@
-Certainly! Let's expand the README.md with more details from your article to give it a richer context:
 
-```markdown
+
+
 # 🚗 Autolib
 
 ## 🌟 Introduction
-![Autolib](https://github.com/Josekariz/reactautolib/blob/main/Screenshot%20(39).png?raw=true)
+![Autolib](https://raw.githubusercontent.com/Josekariz/reactautolib/main/Screenshot%20(39).png)
+
 
 
 Welcome to [Autolib](https://auto-lib.vercel.app/), a groundbreaking platform where the romance of cars meets the real-world experiences of their owners. 🌍 Our mission is to transcend traditional car reviews by providing a space for genuine, detailed, and personal car stories. This isn't just about cars; it's about the journeys, adventures, and memories made with them. 🚘🛣️
