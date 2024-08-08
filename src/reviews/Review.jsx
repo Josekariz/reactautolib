@@ -6,14 +6,13 @@ import ReviewCard from "../components/ReviewCard";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import FloatingButton from "../components/FloatingButton";
+import Loading from "../components/Loading";
 
 function Reviews() {
   // test
   //const dburl = "http://localhost:4000/reviews"
 
-  
-
-  const dburl= "https://backend-autolib.onrender.com/reviews"
+  const dburl = "https://backend-autolib.onrender.com/reviews";
 
   const navigate = useNavigate();
 
@@ -37,13 +36,7 @@ function Reviews() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-white">
-        <div className="text-lg font-medium">
-          Loading<span className="loading loading-dots loading-md"></span>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (isError) {
@@ -68,7 +61,7 @@ function Reviews() {
         </div>
       </div>
       <Footer />
-      <FloatingButton/>
+      <FloatingButton />
     </>
   );
 }
