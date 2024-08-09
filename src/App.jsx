@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Navbar from "./Navbar/Navbar";
@@ -5,6 +6,19 @@ import backgroundImage from "./assets/background.jpg"; // Adjust the path accord
 import Footer from "./Footer/Footer";
 
 export default function App() {
+  // Use useEffect to wake up the service when the component mounts
+  useEffect(() => {
+    fetch("/wake-service")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .catch((error) => {
+        console.error("Error waking up service:", error);
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -33,7 +47,7 @@ export default function App() {
           </Link>
         </div>
       </div>
-      
+
       <Footer />
     </>
   );
